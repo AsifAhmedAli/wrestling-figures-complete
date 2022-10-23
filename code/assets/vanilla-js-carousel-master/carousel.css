@@ -1,0 +1,140 @@
+.gallery {
+  width: 100%;
+  position: relative;
+}
+
+.gallery-container {
+  align-items: center;
+  display: flex;
+  height: 666px;
+  margin: 0 auto;
+  max-width: 1000px;
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-item {
+  height: 150px;
+  opacity: 0;
+  position: absolute;
+  transition: all 0.3s ease-in-out;
+  width: 150px;
+  z-index: 0;
+}
+
+.gallery-item-1 {
+  left: 15%;
+  opacity: 0.4;
+  transform: translateX(-30%);
+}
+
+.gallery-item-2,
+.gallery-item-4 {
+  height: 500px;
+  opacity: 1;
+  width: 100%;
+  z-index: 1;
+}
+
+.gallery-item-2 {
+  left: 30%;
+  transform: translateX(-46%);
+}
+
+.gallery-item-3 {
+  filter: drop-shadow(0 0px 100px rgba(0, 0, 0, 1));
+  height: 666px;
+  opacity: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 394px;
+  z-index: 2;
+}
+
+.gallery-item-4 {
+  left: 70%;
+  transform: translateX(-54%);
+}
+
+.gallery-item-5 {
+  left: 85%;
+  opacity: 0.4;
+  transform: translateX(-80%);
+}
+
+.gallery-controls {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  z-index: 5;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0;
+}
+
+.gallery-controls button {
+  background-color: transparent;
+  width: 68px;
+  height: 68px;
+  border: 0;
+  cursor: pointer;
+  font-size: 16px;
+  color: transparent;
+  margin: 0 20px;
+  padding: 0 12px;
+  text-transform: capitalize;
+}
+
+.gallery-controls button:focus {
+  outline: none;
+}
+
+.gallery-controls-add {
+  display: none;
+}
+
+.gallery-controls-previous {
+  position: relative;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='71' height='72' viewBox='0 0 71 72'%3E%3Cg id='carousel_back' transform='translate(-20 -16)'%3E%3Crect id='Rectangle_8' data-name='Rectangle 8' width='68' height='69' rx='8.5' transform='translate(21.5 17.5)' fill='none' stroke='%236898ff' stroke-width='3'/%3E%3Cpath id='Path_10' data-name='Path 10' d='M60.225,39l-10,10,10,10L62,57.225,53.775,49,62,40.775Z' transform='translate(-0.613 3)' fill='%236898ff'/%3E%3C/g%3E%3C/svg%3E%0A");  background-repeat: no-repeat;
+  background-repeat: no-repeat;
+  background-size: 68px;
+}
+
+.gallery-controls-previous:hover::before {
+  left: -18px;
+}
+
+.gallery-controls-next {
+  position: relative;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='71' height='72' viewBox='0 0 71 72'%3E%3Cg id='carousel_forward' transform='translate(-20 -16)'%3E%3Crect id='Rectangle_8' data-name='Rectangle 8' width='68' height='69' rx='8.5' transform='translate(21.5 17.5)' fill='none' stroke='%236898ff' stroke-width='3'/%3E%3Cpath id='Path_10' data-name='Path 10' d='M52,39,62,49,52,59l-1.775-1.775L58.45,49l-8.225-8.225Z' transform='translate(-0.613 3)' fill='%236898ff'/%3E%3C/g%3E%3C/svg%3E%0A");
+  background-repeat: no-repeat;
+  background-size: 68px;
+}
+
+.gallery-controls-next:hover::before {
+  right: -18px;
+}
+
+.gallery-nav {
+  bottom: -15px;
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.gallery-nav li {
+  background: #ccc;
+  border-radius: 50%;
+  height: 10px;
+  margin: 0 16px;
+  width: 10px;
+}
+
+.gallery-nav li.gallery-item-selected {
+  background: #555;
+}
