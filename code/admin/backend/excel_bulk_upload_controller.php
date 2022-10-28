@@ -129,7 +129,7 @@ include("../../controllers/db.php");
                         }
                         $result1->close();
                         $conn->next_result();
-                        $sql2 = "CALL add_images_of_wrestler('$id','$images', 'no')";                
+                        $sql2 = "CALL add_images_of_wrestler('$id','$images', 'yes')";                
                         if ($conn->query($sql2) === TRUE) {
 
                         }
