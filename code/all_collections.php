@@ -80,6 +80,28 @@ if(!empty($_SESSION['employee_username1'])){
                 </div>
               </div>
             </div>
+            <div class="modal fade"  style="color: black;" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel1">Edit Collection</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form id="edit_collection">
+                          <div class="mb-3">
+
+                            <label for="exampleInputEmail1" class="form-label">Collection Name</label>
+                            <input value="<?php //echo $; ?>" id="edit_col_name" name="updated_col_name" style="color: black;" type="text" class="form-control">
+                            <input id="collectionsaas" name="id_of_collection" style="visibility: hidden;">
+                          </div>
+                          <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             <div class="list-collection table-responsive rounded bg-darkblue py-3 px-1">
               <table class="table">
                 <thead>
@@ -118,9 +140,9 @@ if(!empty($_SESSION['employee_username1'])){
                         <td><a href="./singlecollection.php?col=<?php echo $id_of_collection; ?>&name=<?php echo $row21['name1']; ?>"><?php echo $row21['name1']; ?></a></td>
                         <td><?php echo $row21['created_on']; ?></td>
                         <td><?php echo $number_of_figures; ?></td>
-                        <td><span class="material-icons material-icons-outlined">delete</span></td>
+                        <td><span role="button" onclick="deletecollection('<?php echo $id_of_collection; ?>')" class="hover-border material-icons material-icons-outlined">delete</span></td>
                         <td>
-                          Edit
+                          <span role="button" onclick="edit_collection_modal('<?php echo $id_of_collection; ?>', '<?php echo $row21['name1']; ?>')" class="p-2 hover-border">Edit</span> 
                         </td>
                       </tr>                      
                       <?php
@@ -177,6 +199,67 @@ if(!empty($_SESSION['employee_username1'])){
         }
       });
     });
+    
+
+    function deletecollection(x){
+      // alert(x);
+      document.getElementById("loader1").style.visibility = "visible";
+      $.ajax({
+        type: "post",
+        data: {x:x},
+        url: "controllers/delete_collection.php",
+        success: function (result) {
+          $("#div11").html(result);
+          document.getElementById("loader1").style.visibility = "hidden";
+        }
+      });
+    }
+    function edit_collection_modal(x, nameofcollection){
+      $('#exampleModal1').modal('show');
+      document.getElementById("collectionsaas").value = x;
+      document.getElementById("edit_col_name").value = nameofcollection;
+      // alert(x);
+      // document.getElementById("loader1").style.visibility = "visible";
+      // $.ajax({
+      //   type: "post",
+      //   data: serializedData,
+      //   url: "controllers/new_collection_controller.php",
+      //   success: function (result) {
+      //     $("#div11").html(result);
+      //     document.getElementById("loader1").style.visibility = "hidden";
+      //   }
+      // });
+    }
+
+
+    $("#edit_collection").submit(function (event) {
+
+        // Prevent default posting of form - put here to work in case of errors
+        event.preventDefault();
+
+        // Abort any pending request
+        if (request) {
+          request.abort();
+        }
+        // setup some local variables
+        var $form = $(this);
+
+        // Let's select and cache all the fields
+        var $inputs = $form.find("input, select, button, textarea");
+
+        // Serialize the data in the form
+        var serializedData = $form.serialize();
+        document.getElementById("loader1").style.visibility = "visible";
+        $.ajax({
+          type: "post",
+          data: serializedData,
+          url: "controllers/edit_collection_controller.php",
+          success: function (result) {
+            $("#div11").html(result);
+            document.getElementById("loader1").style.visibility = "hidden";
+          }
+        });
+        });
   </script>
   <script>
     document.getElementById("humburger").onclick = function () {

@@ -187,9 +187,9 @@ if(!empty($_SESSION['employee_username1'])){
                                                               <ul class="dropdown-menu"
                                                                 aria-labelledby="dropdownMenuButton1">
                                                                 <li>
-                                                                  <button onclick="remove_from_wishlist_employee('<?php echo $id; ?>','<?php echo $idofwrestlingfigure; ?>')"
+                                                                  <button onclick="remove_from_collection_employee('<?php echo $id; ?>','<?php echo $idofwrestlingfigure; ?>', '<?php echo $col_id; ?>')"
                                                                     class="dropdown-item">Remove from
-                                                                    Wishlist</button>
+                                                                    Collection</button>
                                                                 </li>
                                                               </ul>
                                                             </div>
@@ -252,9 +252,9 @@ if(!empty($_SESSION['employee_username1'])){
                                                               <ul class="dropdown-menu"
                                                                 aria-labelledby="dropdownMenuButton1">
                                                                 <li>
-                                                                  <button onclick="remove_from_wishlist_employee('<?php echo $id; ?>','<?php echo $idofwrestlingfigure; ?>')"
+                                                                <button onclick="remove_from_collection_employee('<?php echo $id; ?>','<?php echo $idofwrestlingfigure; ?>', '<?php echo $col_id; ?>')"
                                                                     class="dropdown-item">Remove from
-                                                                    Wishlist</button>
+                                                                    Collection</button>
                                                                 </li>
                                                               </ul>
                                                             </div>
@@ -317,9 +317,9 @@ if(!empty($_SESSION['employee_username1'])){
                                                               <ul class="dropdown-menu"
                                                                 aria-labelledby="dropdownMenuButton1">
                                                                 <li>
-                                                                  <button onclick="remove_from_wishlist_employee('<?php echo $id; ?>','<?php echo $idofwrestlingfigure; ?>')"
+                                                                <button onclick="remove_from_collection_employee('<?php echo $id; ?>','<?php echo $idofwrestlingfigure; ?>', '<?php echo $col_id; ?>')"
                                                                     class="dropdown-item">Remove from
-                                                                    Wishlist</button>
+                                                                    Collection</button>
                                                                 </li>
                                                               </ul>
                                                             </div>
@@ -382,9 +382,9 @@ if(!empty($_SESSION['employee_username1'])){
                                                               <ul class="dropdown-menu"
                                                                 aria-labelledby="dropdownMenuButton1">
                                                                 <li>
-                                                                  <button onclick="remove_from_wishlist_employee('<?php echo $id; ?>','<?php echo $idofwrestlingfigure; ?>')"
+                                                                <button onclick="remove_from_collection_employee('<?php echo $id; ?>','<?php echo $idofwrestlingfigure; ?>', '<?php echo $col_id; ?>')"
                                                                     class="dropdown-item">Remove from
-                                                                    Wishlist</button>
+                                                                    Collection</button>
                                                                 </li>
                                                               </ul>
                                                             </div>
@@ -437,13 +437,13 @@ if(!empty($_SESSION['employee_username1'])){
       };
 
 
-      function remove_from_wishlist_employee(user_id, figure_id){
+      function remove_from_collection_employee(user_id, figure_id, col_id){
       // console.log(x);
       document.getElementById('loader1').style.visibility = 'visible';
       $.ajax({
                 type: "post",
-                data: {user_id:user_id,figure_id:figure_id},
-                url: "./controllers/remove_from_wishlist_controller.php",
+                data: {user_id:user_id,figure_id:figure_id, col_id:col_id},
+                url: "./controllers/remove_from_collection_controller.php",
                 success: function (result) {
                   $('#mymodal').modal('hide');
                     $("#div122").html(result);
