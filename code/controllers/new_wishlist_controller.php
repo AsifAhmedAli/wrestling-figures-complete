@@ -10,37 +10,37 @@ if(!empty($_SESSION['employee_username1'])){
       // output data of each row
       $row = $result->fetch_assoc();
       $loggedinuserid = $row['id'];
-      $noofcollections = $row['noofcollections'];
+      $noofwishlist = $row['noofwishlist'];
     }
   }
 // if(empty($_SESSION['employee_username1'])){
 //   echo "<script>window.location.replace('login.php');</script>";
 // }
-$collection_name = $_POST['collection_name'];
+$wishlist_name = $_POST['wishlist_name'];
 $conn->next_result();
-$sql = "CALL collection_name_validation('$loggedinuserid', '$collection_name')";
+$sql = "CALL wishlist_name_validation('$loggedinuserid', '$wishlist_name')";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
   echo "<script>Swal.fire({
     icon: 'error',
     title: 'Duplicate Name',
-    text: 'A Collection with this name already exists!'
+    text: 'A Wishlist with this name already exists!'
   })</script>";
 }
 
 else{
   $conn->next_result();
   //   echo "<script>console.log('".$collection_name."')</script>";
-  $sqlq1 = "CALL count_number_of_collections('$loggedinuserid')";
+  $sqlq1 = "CALL count_number_of_wishlists('$loggedinuserid')";
   $result = $conn->query($sqlq1);
         if ($result->num_rows > 0) {
           // output data of each row
           while($row = $result->fetch_assoc()) {
-            $noofcolelctions12= $row['noofcolelctions12'];
+            $numberofwislists= $row['noofwishlist12'];
           }
         }
-        if($noofcolelctions12 >= $noofcollections){
+        if($numberofwislists >= $noofwishlist){
           echo "<script>Swal.fire({
             icon: 'error',
             title: 'Limitation Error',
@@ -50,14 +50,14 @@ else{
         else{
           $conn->next_result();
           //   echo "<script>console.log('".$collection_name."')</script>";
-          $sqlq = "CALL add_new_collection('$collection_name', '$loggedinuserid')";
+          $sqlq = "CALL add_new_wishlist('$wishlist_name', '$loggedinuserid')";
           if ($conn->query($sqlq) === TRUE) {
               // if(unlink('../../../wrestler_images/'.$nameofimage)){
                   echo "<script>
                   Swal.fire({
                     icon: 'success',
                     title: 'Added...',
-                    text: 'New Collection has been successfully added!',
+                    text: 'New Wishlist has been successfully added!',
                     allowOutsideClick: false
                   })
                   $( 'button.swal2-confirm' ).click(function() {

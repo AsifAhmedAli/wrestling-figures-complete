@@ -28,7 +28,7 @@
               >
             </li>
             <li>
-              <a href="./singlewishlist.php" class="nav-link">Wishlist</a>
+              <a href="./all_wishlists.php" class="nav-link">Wishlists</a>
             </li>
             <li>
               <a href="./all_collections.php" class="nav-link">Collections</a>

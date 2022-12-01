@@ -29,8 +29,8 @@ if ($result->num_rows > 0) {
 //   echo "<script>window.location.replace('index.php');</script>";
 } else {
     // echo "<script>alert('".$username.$password.$name."');</script>";
-    $sql = "INSERT INTO users (name1, email1, pass1) 
-    VALUES ('$name','$username','$password')";
+    $sql = "INSERT INTO users (name1, email1, pass1, noofwishlist, noofcollections ) 
+    VALUES ('$name','$username','$password', 1, 2)";
 
     if ($conn->query($sql) === TRUE) {
                echo "<script>

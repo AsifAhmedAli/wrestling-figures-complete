@@ -86,19 +86,21 @@ function allfigures($conn, $start_limit, $id){
                                     $conn->next_result();
                                     $sql21 = "CALL wish_list_of_a_user('$id', '$wrestlerid')";
                                     $result21 = $conn->query($sql21);
-
+    // echo("Error description: " . $conn -> error);
                                     if ($result21->num_rows > 0) {
                                     // output data of each row
                                     while($row21 = $result21->fetch_assoc()) {
                                             $disabled_wishlist = "wishlist";
                                     }
                                 }
+                                
                                 ?>
 
                                 <?php
                                 if($disabled_wishlist == ""){
+                                    echo "<script>console.log('".$disabled_wishlist."')</script>";
                                 ?>
-                                    <button class="wishlist me-2" <?php echo $disabled_wishlist; ?> onclick="add_to_wishlist('<?php echo $id; ?>', '<?php echo $wrestlerid; ?>')">
+                                    <button class="wishlist me-2" <?php echo $disabled_wishlist; ?> onclick="showmodalas1('<?php echo $wrestlerid; ?>')">
                                         <img src="./assets/images/gift.svg" width="28" height="28" alt="" />
                                     </button>
                                 <?php
@@ -254,7 +256,7 @@ function withfilter($conn, $start_limit, $id){
                                 <?php
                                 if($disabled_wishlist == ""){
                                 ?>
-                                    <button class="wishlist me-2" <?php echo $disabled_wishlist; ?> onclick="add_to_wishlist('<?php echo $id; ?>', '<?php echo $wrestlerid; ?>')">
+                                    <button class="wishlist me-2" <?php echo $disabled_wishlist; ?> onclick="showmodalas1('<?php echo $wrestlerid; ?>')">
                                         <img src="./assets/images/gift.svg" width="28" height="28" alt="" />
                                     </button>
                                 <?php
@@ -334,19 +336,77 @@ function withfilter($conn, $start_limit, $id){
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" style="color: black;" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">Add to Wishlist</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">          
+        <select style="color: black;" id="selected_wishlist" required class="form-select form-select-sm" aria-label=".form-select-sm example">
+            <option value="" selected disabled>Select Wishlist</option>
+            
+            <?php
+                $conn->next_result();
+                $sqlq1 = "CALL all_wishlists('$id')";
+                $result1 = $conn->query($sqlq1);
+
+                if ($result1->num_rows > 0) {
+                // output data of each row
+                while($row1 = $result1->fetch_assoc()) {
+                    ?>
+                    <option value="<?php echo $row1['id'] ?>"><?php echo $row1['name1'] ?></option>
+                    <?php
+                    }
+                }
+            ?>            
+        </select>
+        <input type="text" style="visibility: hidden;" id="wrester_idas1">
+            <div class="text-end mt-3">
+                <button onclick="add_to_wishlist('<?php echo $id; ?>')" type="button" class="btn btn-primary">Add</button>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div id="div1212"></div>
 <script>
     function add_to_wishlist(user_id, wrestler_id){
+        wishlist_id = document.getElementById("selected_wishlist").value;
+        wrestler_id = document.getElementById("wrester_idas1").value;
         document.getElementById("loader1").style.visibility = "visible";
-        $.ajax({
-          type: "post",
-          data: {user_id:user_id, wrestler_id: wrestler_id},
-          url: "controllers/add_to_wishlist_controller.php",
-          success: function (result) {
-            $("#div1212").html(result);
-             document.getElementById("loader1").style.visibility = "hidden";
-          }
-        });
+        
+        if(wishlist_id == ""){
+            alert("Please select a collection");
+            document.getElementById("loader1").style.visibility = "hidden";
+            // alert(collection_id + " " + user_id + " " + wrestler_id);
+        }
+        else{
+            $.ajax({
+                type: "post",
+                data: {wishlist_id:wishlist_id, wrestler_id: wrestler_id},
+                url: "controllers/add_to_wishlist_controller.php",
+                success: function (result) {
+                    $("#div1212").html(result);
+                    document.getElementById("loader1").style.visibility = "hidden";
+                }
+            });
+        }
+        // document.getElementById("loader1").style.visibility = "visible";
+        // $.ajax({
+        //   type: "post",
+        //   data: {user_id:user_id, wrestler_id: wrestler_id},
+        //   url: "controllers/add_to_wishlist_controller.php",
+        //   success: function (result) {
+        //     $("#div1212").html(result);
+        //      document.getElementById("loader1").style.visibility = "hidden";
+        //   }
+        // });
+
+
         // console.log(user_id);
         // console.log(wrestler_id);
     }
@@ -376,6 +436,12 @@ function withfilter($conn, $start_limit, $id){
         var myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
         myModal.show();
         document.getElementById("wrester_idas").value = wrestler_id;
+        // alert(document.getElementById("wrester_idas").value);
+    }
+    function showmodalas1(wrestler_id){
+        var myModal1 = new bootstrap.Modal(document.getElementById('exampleModal1'))
+        myModal1.show();
+        document.getElementById("wrester_idas1").value = wrestler_id;
         // alert(document.getElementById("wrester_idas").value);
     }
     

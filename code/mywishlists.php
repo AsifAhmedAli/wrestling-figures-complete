@@ -8,7 +8,11 @@ if(isset($_GET['filter'])){
 else{
   $sort = "none";
 }
-
+$wishlist_id = $_GET['wishlist_id'];
+$name = $_GET['name'];
+  if($wishlist_id == '' || $name == ''){
+    echo "<script>window.location.replace('index.php')</script>";
+  }
 if(!empty($_SESSION['employee_username1'])){
   $loggedinuseremail = $_SESSION['employee_username1'];
   $sql = "CALL select_logged_in_user_details('$loggedinuseremail')";
@@ -28,7 +32,7 @@ if(!empty($_SESSION['employee_username1'])){
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wishlists - Single</title>
+    <title>Wishlist - Single</title>
 
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -77,13 +81,13 @@ if(!empty($_SESSION['employee_username1'])){
                       aria-labelledby="dropdownMenuButton1"
                     >
                       <li>
-                        <a class="dropdown-item active" href="./mywishlists.php?filter=brand">Brand</a>
+                        <a class="dropdown-item active" href="./mywishlists.php?wishlist_id=<?php echo $wishlist_id; ?>&name=<?php echo $name; ?>&filter=brand">Brand</a>
                       </li>
                       <li>
-                        <a class="dropdown-item" href="./mywishlists.php?filter=series">Series</a>
+                        <a class="dropdown-item" href="./mywishlists.php?wishlist_id=<?php echo $wishlist_id; ?>&name=<?php echo $name; ?>&filter=series">Series</a>
                       </li>
                       <li>
-                        <a class="dropdown-item" href="./mywishlists.php?filter=year">Year</a>
+                        <a class="dropdown-item" href="./mywishlists.php?wishlist_id=<?php echo $wishlist_id; ?>&name=<?php echo $name; ?>&filter=year">Year</a>
                       </li>
                     </ul>
                   </div>
@@ -107,15 +111,15 @@ if(!empty($_SESSION['employee_username1'])){
                       class="dropdown-menu"
                       aria-labelledby="dropdownMenuButton1"
                     >
-                      <li>
+                    <li>
                         <a
                           class="dropdown-item active"
-                          href="./singlewishlist.php"
+                          href="./singlewishlist.php?wishlist_id=<?php echo $wishlist_id; ?>&name=<?php echo $name; ?>"
                           >Card View</a
                         >
                       </li>
                       <li>
-                        <a class="dropdown-item" href="./mywishlists.php"
+                        <a class="dropdown-item" href="./mywishlists.php?wishlist_id=<?php echo $wishlist_id; ?>&name=<?php echo $name; ?>"
                           >Table View</a
                         >
                       </li>
@@ -142,7 +146,7 @@ if(!empty($_SESSION['employee_username1'])){
                   switch ($sort) {
                     case 'none':{
                       $conn -> next_result();
-                      $sql21 = "CALL wish_list_of_a_user_with_figure_details('$id')";
+                      $sql21 = "CALL wish_list_of_a_user_with_figure_details('$wishlist_id')";
                       $result21 = $conn->query($sql21);
                           if ($result21->num_rows > 0) {
                             // output data of each row
@@ -168,7 +172,7 @@ if(!empty($_SESSION['employee_username1'])){
                     }
                     case 'brand':{
                       $conn -> next_result();
-                      $sql21 = "CALL wish_list_of_a_user_with_figure_details_order_by_brand('$id')";
+                      $sql21 = "CALL wish_list_of_a_user_with_figure_details_order_by_brand('$wishlist_id')";
                       $result21 = $conn->query($sql21);
                           if ($result21->num_rows > 0) {
                             // output data of each row
@@ -194,7 +198,7 @@ if(!empty($_SESSION['employee_username1'])){
                     }
                     case 'series':{
                       $conn -> next_result();
-                      $sql21 = "CALL wish_list_of_a_user_with_figure_details_order_by_series('$id')";
+                      $sql21 = "CALL wish_list_of_a_user_with_figure_details_order_by_series('$wishlist_id')";
                       $result21 = $conn->query($sql21);
                           if ($result21->num_rows > 0) {
                             // output data of each row
@@ -220,7 +224,7 @@ if(!empty($_SESSION['employee_username1'])){
                     }
                     case 'year':{
                       $conn -> next_result();
-                      $sql21 = "CALL wish_list_of_a_user_with_figure_details_order_by_year('$id')";
+                      $sql21 = "CALL wish_list_of_a_user_with_figure_details_order_by_year('$wishlist_id')";
                       $result21 = $conn->query($sql21);
                           if ($result21->num_rows > 0) {
                             // output data of each row

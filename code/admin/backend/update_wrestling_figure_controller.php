@@ -4,7 +4,7 @@ include("../../controllers/db.php");
 // if(empty($_SESSION['employee_username1'])){
 //   echo "<script>window.location.replace('login.php');</script>";
 // }
-
+$id_of_wrestler = $_POST['id_of_wrestler'];
 $Wrestler = $_POST['Wrestler'];
 $SKU = $_POST['SKU'];
 $Brand = $_POST['Brand'];
@@ -13,20 +13,28 @@ $Subline = $_POST['Subline'];
 $Figure = $_POST['Figure'];
 $Series = $_POST['Series'];
 $Year = $_POST['Year'];
-    $sql = "CALL create_wrestling_figure('$Wrestler','$SKU','$Brand','$Line','$Subline','$Figure','$Series','$Year')";
+    $sql = "CALL update_wrestling_figure('$Wrestler','$SKU','$Brand','$Line','$Subline','$Figure','$Year','$Series', '$id_of_wrestler')";
     // $result = $conn1->query($sql);
     // !$conn1 -> query($sql);
     if ($conn->query($sql) === TRUE) {
         echo "<script>
         Swal.fire({
           icon: 'success',
-          title: 'Registered...',
-          text: 'New Wrestling Figure Added Successfully!',
+          title: 'Updated...',
+          text: 'The Wrestling Figure is Updated Successfully!',
           allowOutsideClick: false
         })
         $( 'button.swal2-confirm' ).click(function() {
-          window.location.reload();
+            document.getElementById('loader1').style.visibility = 'visible';
+            $.ajax({
+            type: 'post',
+            url: './backend/all_wrestling_figures.php',
+            success: function (result) {
+                $('#showhere').html(result);
+                document.getElementById('loader1').style.visibility = 'hidden';
+            }
         });
+    });
         </script>";
       }
     //   echo("Error description: " . $conn -> error);

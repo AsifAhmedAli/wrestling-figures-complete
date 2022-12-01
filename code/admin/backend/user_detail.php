@@ -31,35 +31,68 @@ $name = $_POST['name'];
         <table class="table table-hover text-center table-bordered table-striped">
         <thead>
           <tr>
-            <th>Wrestler Name</th>
+            <!-- <th></th> -->
+            <!-- <th>Wrestler Name</th>
             <th>SKU</th>
             <th>Brand</th>  
-            <th>Added to Wishlist on</th>  
-            <th></th>
+            <th>Added to Wishlist on</th>   -->
+            <th>Wishlist Name</th>
+            <th>Created on</th>  
+            <th>Edit</th>  
+            <th>Delete</th>
+
             <!-- <th>Edit</th>     -->
           </tr>
         </thead>
         <tbody>
           <?php
-                        $sql21 = "CALL wish_list_of_a_user_with_figure_details('$id')";
-                                    $result21 = $conn->query($sql21);
-                                    if ($result21->num_rows > 0) {
-                                    // output data of each row
-                                    while($row21 = $result21->fetch_assoc()) {
-                                      $idofwrestlingfigure = $row21['id'];
-                                            ?>
-                                            <tr>
-                                              <td class="mupointer"> <a href="../productsitem.php?id=<?php echo $idofwrestlingfigure; ?>" target="_blank" style="text-decoration: none;color:#858796;"><?php echo $row21['wrestler']; ?></a></td>
-                                              <td><?php echo $row21['SKU']; ?></td>
-                                              <td><?php echo $row21['Brand']; ?></td>
-                                              <td><?php echo $row21['date_added']; ?></td>
-                                              <td class="mupointer" onclick="remove_from_wishlist_employee('<?php echo $id; ?>','<?php echo $idofwrestlingfigure; ?>')"><i class="fa fa-trash"></i></td>
-                                            </tr>
-                                            <?php
-                                    }
-                                }
-                                // echo("Error description: " . $conn -> error);
-          ?>
+                                  $conn->next_result();
+                                  $sql21 = "CALL all_wishlists('$id')";
+                                              $result21 = $conn->query($sql21);
+                                              if ($result21->num_rows > 0) {
+                                              // output data of each row
+                                              while($row21 = $result21->fetch_assoc()) {
+                                                $idofwishlist = $row21['id'];
+                                                $nameofwishlist = $row21['name1'];
+                                                      ?>
+                                                       <tr>
+                                                         <td class="mupointer"><?php echo $row21['name1']; ?></td>
+                                                         <td><?php echo $row21['created_on']; ?></td>
+                                                         <td class="mupointer" onclick="edit_wishlist('<?php echo $idofwishlist; ?>', '<?php echo $nameofwishlist; ?>')"><i class="fa fa-edit"></i></td>
+                                                         <td class="mupointer" onclick="delete_wishlist('<?php echo $idofwishlist; ?>')"><i class="fa fa-trash"></i></td>
+                                                         <!-- <td class="mupointer" onclick="remove_from_wishlist_employee('<?php //echo $id; ?>','<?php //echo $idofwrestlingfigure; ?>')">Remove from Wishlist</td> -->
+                                                       </tr>
+                                                       <!-- <table class="table-sm table-dark table">
+                                                                      <th>Wrestler Name</th>
+                                                                      <th>SKU</th>
+                                                                      <th>Brand</th>  
+                                                                      <th>Added to Wishlist on</th>  
+                                                                      <th></th> -->
+                                                           <?php
+                                                        //    $conn->next_result();
+                                                        //  $sql2143 = "CALL wish_list_of_a_user_with_figure_details('$idofwishlist')";
+                                                        // $result2143 = $conn->query($sql2143);
+                                                        // if ($result2143->num_rows > 0) {
+                                                        // // output data of each row
+                                                        // while($row2143 = $result2143->fetch_assoc()) {
+                                                        //   $idofwrestlingfigure = $row2143['id'];
+                                                        ?>
+                                                        <!-- <tr>
+                                                          <td class="mupointer"> <a href="../productsitem.php?id=<?php //echo $idofwrestlingfigure; ?>" target="_blank" style="text-decoration: none;color:#858796;"><?php //echo $row2143['wrestler']; ?></a></td>
+                                                          <td><?php //echo $row2143['SKU']; ?></td>
+                                                          <td><?php //echo $row2143['Brand']; ?></td>
+                                                          <td><?php //echo $row2143['date_added']; ?></td>
+                                                          <td class="mupointer" onclick="remove_from_wishlist_employee('<?php //echo $id; ?>','<?php //echo $idofwrestlingfigure; ?>')"><i class="fa fa-trash"></i></td>
+                                                        </tr> -->
+                                                        <?php
+                                                      //     }
+                                                      // }
+                                ?>
+                                                       <!-- </table> -->
+                                                       <?php
+                                              }
+                                          }
+?>
         </tbody>
         </table>
       </div>
@@ -108,7 +141,7 @@ $name = $_POST['name'];
 </div>
 
 
-<!-- edit modal -->
+<!-- edit controller modal -->
 <div class="modal fade"  style="color: black;" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1"
                   aria-hidden="true">
                   <div class="modal-dialog modal-lg">
@@ -132,6 +165,31 @@ $name = $_POST['name'];
                   </div>
 </div>
 
+
+<!-- edit wishlist modal -->
+<!-- edit modal -->
+<div class="modal fade"  style="color: black;" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel3">Edit Wishlist</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form id="edit_wishlist">
+                          <div class="mb-3">
+
+                            <label for="exampleInputEmail1" class="form-label">Wishlist Name</label>
+                            <input value="<?php //echo $; ?>" id="edit_wishlist_name" name="updated_wishlist_name" style="color: black;" type="text" class="form-control">
+                            <input id="collectionsaas1" name="id_of_wishlist" style="visibility: hidden;">
+                          </div>
+                          <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+</div>
 <div id="div122"></div>
 <script>
     $('#mymodal').modal('show');
@@ -170,6 +228,8 @@ $name = $_POST['name'];
       document.getElementById("collectionsaas").value = col_id;
       document.getElementById("edit_col_name").value = col_name;
     }
+
+
     var request;
     $("#edit_collection").submit(function (event) {
       $('#exampleModal1').modal('hide');
@@ -193,6 +253,62 @@ $name = $_POST['name'];
         type: "post",
         data: serializedData,
         url: "backend/edit_collection_controller.php",
+        success: function (result) {
+          $("#div122").html(result);
+          document.getElementById("loader1").style.visibility = "hidden";
+        }
+      });
+      });
+
+
+
+
+
+
+      function delete_wishlist(wishlist_id){
+      // console.log(x);
+      document.getElementById('loader1').style.visibility = 'visible';
+      $.ajax({
+                type: "post",
+                data: {wishlist_id:wishlist_id},
+                url: "./backend/delete_wishlist.php",
+                success: function (result) {
+                  $('#mymodal').modal('hide');
+                    $("#div122").html(result);
+                    document.getElementById('loader1').style.visibility = 'hidden';
+                }
+            });
+    }
+    function edit_wishlist(wishlist_id, wishlist_name){
+      $('#mymodal').modal('hide');
+      $('#exampleModal3').modal('show');
+      document.getElementById("collectionsaas1").value = wishlist_id;
+      document.getElementById("edit_wishlist_name").value = wishlist_name;
+    }
+
+    
+    $("#edit_wishlist").submit(function (event) {
+      $('#exampleModal3').modal('hide');
+      // Prevent default posting of form - put here to work in case of errors
+      event.preventDefault();
+
+      // Abort any pending request
+      if (request) {
+        request.abort();
+      }
+      // setup some local variables
+      var $form = $(this);
+
+      // Let's select and cache all the fields
+      var $inputs = $form.find("input, select, button, textarea");
+
+      // Serialize the data in the form
+      var serializedData = $form.serialize();
+      document.getElementById("loader1").style.visibility = "visible";
+      $.ajax({
+        type: "post",
+        data: serializedData,
+        url: "backend/edit_wishlist_controller.php",
         success: function (result) {
           $("#div122").html(result);
           document.getElementById("loader1").style.visibility = "hidden";

@@ -8,21 +8,21 @@ include("../../controllers/db.php");
     </h3>
     <form id="addwrestler">
         <div class="input-group mb-3 col-md-6 mt-4 mx-auto">
-        <input value="asif" type="text" id="Wrestler" name="Wrestler" class="form-control" placeholder="Enter Wrestler">
-        <input value="asif" type="text" id="SKU" name="SKU" class="form-control" placeholder="Enter SKU">
+        <input  type="text" id="Wrestler" name="Wrestler" class="form-control" placeholder="Enter Wrestler">
+        <input  type="text" id="SKU" name="SKU" class="form-control" placeholder="Enter SKU">
         </div>
         <div class="input-group mb-3 col-md-6 mt-4 mx-auto">
-        <input value="asif" type="text" id="Brand" name="Brand" class="form-control" placeholder="Enter Brand">   
-        <input value="asif" type="text" id="Line" name="Line" class="form-control" placeholder="Enter Line">
+        <input  type="text" id="Brand" name="Brand" class="form-control" placeholder="Enter Brand">   
+        <input  type="text" id="Line" name="Line" class="form-control" placeholder="Enter Line">
         </div>
         <div class="input-group mb-3 col-md-6 mt-4 mx-auto">
-        <input value="asif" type="text" id="Subline" name="Subline" class="form-control" placeholder="Enter Subline">
-        <input value="asif" type="text" id="Series" name="Series" class="form-control" placeholder="Enter Series">
+        <input  type="text" id="Subline" name="Subline" class="form-control" placeholder="Enter Subline">
+        <input  type="text" id="Series" name="Series" class="form-control" placeholder="Enter Series">
             
         </div>
         <div class="input-group mb-3 col-md-6 mt-4 mx-auto">
-            <input value="asif" type="text" id="Year" name="Year" class="form-control" placeholder="Enter Year">
-            <!-- <input type="text" id="Category" name="Category" class="form-control" placeholder="Enter Category"> -->
+            <input  type="text" id="Year" name="Year" class="form-control" placeholder="Enter Year">
+            <input  type="text" id="Figure" name="Figure" class="form-control" placeholder="Enter Figure">
         </div>
             <!-- <div class="input-group mb-3 col-md-6 mt-4 mx-auto">
                 <input type="file" class="form-control" multiple name="files[]" id="signleao">
